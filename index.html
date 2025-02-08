@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Valentine's Day</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: pink;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      position: relative;
+      z-index: 10; /* Makes hearts behind the layer */
+    }
+
+    /* Floating Hearts */
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    .floating-heart {
+      position: fixed; /* Fixed to stay in the viewport */
+      top: 100%;
+      font-size: 25px; /* Adjust heart size */
+      animation: float 6s linear infinite;
+      z-index: 1; /* Makes the hearts stay behind the page */
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating hearts Background -->
+  <script>
+    const body = document.body;
+
+    // Create 50 floating hearts
+    for (let i = 0; i < 50; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.innerText = '❤️';
+      heart.style.left = `${Math.random() * 100}%`; // Random horizontal position
+      heart.style.fontSize = `${20 + Math.random() * 50}px`; // Random size
+      heart.style.animationDuration = `${5 + Math.random() * 5}s`; // Random duration
+      heart.style.animationDelay = `${Math.random() * 5}s`; // Random delay
+      body.appendChild(heart);
+    }
+  </script>
+
+  <div class="container">
+    <h1>Hey Desiree, I have something special to ask you!</h1>
+    <p>Click on the hearts to reveal the surprise!</p>
+    <div class="heart-container">
+      <div class="heart" data-message="You are the first and last person I think about every single day. You make my life brighter just by being in it. Thank you for being the amazing person you are. ❤️">❤️</div>
+      <div class="heart" data-message="You have completely changed my world in the most beautiful way. Every moment with you feels like a treasure I never want to lose. I am so grateful to have you in my life. 🥰">❤️</div>
+      <div class="heart" data-message="I cherish every memory we’ve created together, and I look forward to the countless moments we’ll share in the future. You mean more to me than words could ever express. You are my everything, Desiree. 💖">❤️</div>
+    </div>
+    <div class="popup hidden">
+      <h2>Will you be my Valentine? 🥺❤️🌹</h2>
+      <div class="button-container">
+        <button id="yes-button">Yes!</button>
+        <button id="no-button">No...</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let noMoveCount = 0; // Tracks how many times the "No" button has moved
+    let noClickCount = 0; // Tracks how many times the "No" button is clicked
+    let youWinShown = false; // Pops up the "You win" alert
+
+    const noMessages = [
+      "No: Maybe it was an accident...",
+      "No: Why are you clicking no? 🥺",
+      "No: Pookie, stop! 🥺👉🏽👈🏽",
+      "No: You're going to hurt my feelings! 😢",
+      "No: Seriously, why no? 😭",
+      "No: Desiree... just click yes 😔",
+      "No: Come on, I’m trying my best here! 🥺",
+      "No: Fine, be stubborn! But No isn’t the answer! 😠",
+      "No: Better stop, last chance… 😢",
+    ];
+
+    // Heart click
+    document.querySelectorAll('.heart').forEach((heart) => {
+      heart.addEventListener('click', () => {
+        const message = heart.getAttribute('data-message');
+        alert(message); // Display the heart message
+        heart.style.pointerEvents = 'none'; // Disable clicking the same heart again
+        heart.style.opacity = '0.5'; // Fade out clicked hearts
+
+        // Check if all hearts have been clicked
+        const allClicked = Array.from(document.querySelectorAll('.heart')).every(
+          (h) => h.style.pointerEvents === 'none'
+        );
+
+        // Show popup when all hearts are clicked
+        if (allClicked) {
+          const popup = document.querySelector('.popup');
+          popup.classList.remove('hidden');
+          popup.style.display = 'block'; // Makes popup visible
+        }
+      });
+    });
+
+    // "Yes" button click
+    document.getElementById('yes-button').addEventListener('click', () => {
+      // Redirect to the flowers page
+      window.location.href = 'flowers.html';
+    });
+
+    // "No" button mouseover
+    document.getElementById('no-button').addEventListener('mouseover', (event) => {
+      const noButton = event.target;
+
+      if (noMoveCount < 8) {
+        // Get the button's current position and dimensions
+        const buttonRect = noButton.getBoundingClientRect();
+
+        // Calculate a new random position within the window bounds
+        const newTop = Math.random() * (window.innerHeight - buttonRect.height);
+        const newLeft = Math.random() * (window.innerWidth - buttonRect.width);
+
+        // Apply the new position
+        noButton.style.position = 'absolute';
+        noButton.style.top = `${newTop}px`;
+        noButton.style.left = `${newLeft}px`;
+
+        noMoveCount++; // Adds to the move count
+      }
+    });
+
+    // "No" button click
+    document.getElementById('no-button').addEventListener('click', () => {
+      if (!youWinShown) {
+        alert('Fine, You got me. Just DON’T click "No" anymore. 😅');
+        youWinShown = true; // Show the "You win" alert
+      }
+
+      noClickCount++; // Adds the click count for "No"
+
+      // Update the "No" button's text with a new message
+      if (noClickCount <= noMessages.length) {
+        const noButton = document.getElementById('no-button');
+        noButton.innerText = noMessages[noClickCount - 1];
+      }
+
+      if (noClickCount <= 10) {
+        // Make the "Yes" button larger
+        const yesButton = document.getElementById('yes-button');
+        const currentFontSize = parseInt(
+          window.getComputedStyle(yesButton).fontSize
+        );
+        yesButton.style.fontSize = `${currentFontSize + 50}px`;
+      }
+
+      if (noClickCount === 10) {
+        // Change the popup message after 10 clicks
+        const popup = document.querySelector('.popup h2');
+        popup.innerText = 'Can you click "Yes", please? 🥺👉🏽👈🏽';
+
+        // Alert the final message
+        alert('Why are you still clicking No? I have to takeaway the button now! 😢');
+
+        // Make the "No" button disappear
+        const noButton = document.getElementById('no-button');
+        noButton.style.display = 'none'; // Hides the "No" button
+      }
+    });
+  </script>
+</body>
+</html>

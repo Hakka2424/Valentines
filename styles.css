@@ -1,0 +1,97 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: pink;
+  color: #333;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  padding: 20px;
+}
+
+h1 {
+  margin-top: 50px;
+  font-size: 2.5em;
+  color: crimson;
+}
+
+p {
+  margin-top: 10px;
+  font-size: 1.2em;
+  color: #555;
+}
+
+.heart-container {
+  margin-top: 70px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 50px; /* Gap for spacing */
+}
+
+.heart {
+  font-size: 150px; /* Larger emoji size */
+  cursor: pointer;
+  animation: pulse 2s infinite; /* Pulsing animation */
+  transition: transform 0.2s; /* Smooth hover effect */
+}
+
+.heart:hover {
+  transform: scale(1.2); /* Scale up on hover */
+}
+
+.popup {
+  margin-top: 40px;
+  background-color: white;
+  border-radius: 10px;
+  padding: 20px;
+  display: none; /* Hidden */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  animation: fadeIn 1s ease-in-out; /* Fade-in animation */
+  text-align: center;
+}
+
+.popup.hidden {
+  display: none;
+}
+
+.button-container {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+button {
+  background-color: crimson;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 2em;
+}
+
+button:hover {
+  background-color: darkred;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank You, Love!</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #ffe6f2;
+      color: #333;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      overflow: hidden; /* Prevents scrollbars */
+    }
+    h1 {
+      font-size: 3em;
+      margin-top: 50px;
+      color: crimson;
+    }
+    p {
+      font-size: 1.5em;
+      color: #555;
+    }
+    .flower {
+      font-size: 100px;
+      animation: bloom 2s infinite alternate;
+    }
+    .gif-container {
+      margin-top: 30px;
+    }
+    img {
+      width: 300px;
+      height: auto; /* Maintain aspect ratio */
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    }
+    @keyframes bloom {
+      from {
+        transform: scale(1);
+      }
+      to {
+        transform: scale(1.2);
+      }
+    }
+
+    /* Floating hearts */
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0;
+      }
+    }
+    .floating-heart {
+      position: absolute;
+      top: 100%;
+      font-size: 25px; /* Size of the heart emoji */
+      animation: float 6s linear infinite;
+      z-index: -1; /* Ensure hearts stay behind the content */
+    }
+  </style>
+</head>
+<body>
+  <h1>Yay! Thank You, Desiwu! ❤️</h1>
+  <p>Here’s to a beautiful Valentine’s Day together! 💐</p>
+  <div class="flower">🌸🌼🌺🌷🌹</div>
+  <div class="gif-container">
+    <img src="gif1.gif" alt="Special GIF">
+  </div>
+
+  <!-- Floating hearts dynamically added here -->
+  <script>
+    const body = document.body;
+
+    // Create 50 floating hearts
+    for (let i = 0; i < 50; i++) {
+      const heart = document.createElement('div');
+      heart.className = 'floating-heart';
+      heart.innerText = '❤️';
+      heart.style.left = `${Math.random() * 100}%`; // Random horizontal position
+      heart.style.fontSize = `${50 + Math.random() * 100}px`; // Random size
+      heart.style.animationDuration = `${5 + Math.random() * 5}s`; // Random duration
+      heart.style.animationDelay = `${Math.random() * 5}s`; // Random delay
+      body.appendChild(heart);
+    }
+  </script>
+
+  <!-- Add the confetti library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+  <!-- Add the confetti effect -->
+  <script>
+    window.onload = () => {
+      // Initial burst of confetti
+      confetti({
+        particleCount: 1000,
+        spread: 900,
+        origin: {y: 0.3 } // Center the burst
+      });
+
+      // Continuous falling confetti effect
+      setTimeout(() => {
+        const duration = 5 * 1000; // 5 seconds
+        const end = Date.now() + duration;
+
+        (function frame() {
+          confetti({
+            particleCount: 10,
+            angle: 50,
+            spread: 100,
+            origin: { x: 0} // Left
+          });
+          confetti({
+            particleCount: 10,
+            angle: 125,
+            spread: 100,
+            origin: { x: 1} // Right
+          });
+
+          if (Date.now() < end) {
+            requestAnimationFrame(frame);
+          }
+        })();
+      }, 1000); // Start falling confetti 1 second after page load
+    };
+  </script>
+</body>
+</html>
